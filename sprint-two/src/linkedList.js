@@ -52,36 +52,29 @@ var LinkedList = function() {
     //Assign Head to first object
     // debugger;
     
-    var testNode = list.head;
-    
-    while (testNode.next !== null) {
-      if (testNode.value === target) {
-        return true;
-      } else {
-        testNode = testNode.next;
-      }
-    } 
-    
-    return false;
     // var testNode = list.head;
-    // var hasTarget = function(testNode) {
-    //   var result = false;
-    //   if (testNode.next !== null) {
-    //     if (testNode.value === target) {
-    //       return result = true;
-    //     } else {
-    //       testNode = testNode.next;
-    //       hasTarget(testNode);
-    //     } 
-    //   } else if (testNode.next === null) {
-    //     if (test.value === target) {
-    //       return result = true;
-    //     } else {
-    //       return result;
-    //     }
+    
+    // while (testNode.next !== null) {
+    //   if (testNode.value === target) {
+    //     return true;
+    //   } else {
+    //     testNode = testNode.next;
     //   }
-    // };
-    // return hasTarget(testNode);
+    // } 
+    
+    // return false;
+    
+    var hasTarget = function(testNode) {
+      var result = false;
+      if (testNode.value === target) {
+        result = true;
+      } else if (testNode.next !== null) {
+        return hasTarget(testNode.next);
+      }
+      return result;
+    };
+    
+    return hasTarget(list.head);
   };
 
   return list;
