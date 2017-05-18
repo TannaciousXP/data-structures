@@ -32,6 +32,5 @@ stackMethods.pop = function() {
 };
 
 stackMethods.size = function() {
-  console.log(this.length);
   return this.length;
 };
