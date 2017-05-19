@@ -61,7 +61,9 @@ var LinkedList = function() {
     //     testNode = testNode.next;
     //   }
     // } 
-    
+    // if (testNode.value === target) {
+    //   return true;
+    // }
     // return false;
     
     var hasTarget = function(testNode) {
@@ -89,6 +91,8 @@ var Node = function(value) {
   return node;
 };
 
+
 /*
  * Complexity: What is the time complexity of the above functions?
+  O(n)
  */
