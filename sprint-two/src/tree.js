@@ -18,7 +18,7 @@ treeMethods.contains = function(target) {
   var result = false;
   var hasTarget = function(tree) {
     if (tree.value === target) {
-      result = true;
+      return result = true;
     } else if (tree.children) {
       _.each(tree.children, function(child) {
         hasTarget(child);

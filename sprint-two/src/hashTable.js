@@ -17,7 +17,7 @@ HashTable.prototype.remove = function(k) {
   var index = getIndexBelowMaxForKey(k, this._limit);
 };
 
-
+/*hash*/
 
 /*
  * Complexity: What is the time complexity of the above functions?
