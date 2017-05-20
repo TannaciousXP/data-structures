@@ -50,7 +50,6 @@ var HashTable = function() {
 };
 
 HashTable.prototype.insert = function(k, v) {
-  debugger;
    
   //Get the new index for the key given
   var index = getIndexBelowMaxForKey(k, this._limit);
@@ -75,9 +74,9 @@ HashTable.prototype.insert = function(k, v) {
       //get key of existing index value;
       var collisionKey = this._key[(this._key.indexOf(index)) + 1];
   
-      //Create a array of Key and Value for collision  
-      newArray.push([collisionKey, valueExist]);
-      newArray.push([k, v]);
+      //Create a tuple of Key and Value for collision  
+      newArray.push(collisionKey, valueExist);
+      newArray.push(k, v);
 
       //Push the new array to storage
       this._storage.set(index, newArray);
@@ -98,7 +97,7 @@ HashTable.prototype.retrieve = function(k) {
   var retreive = this._storage.get(index);
 
   if (Array.isArray(retreive)) {
-    return retreive.k;
+    return retreive[(retreive.indexOf(k) + 1)];
   } else { 
     return retreive;
   }
