@@ -85,6 +85,20 @@ define([
         stack.pop();
         expect(stack.pop()).to.equal('b');
       });
+
+      it('passing falsy values', function() {
+        //queue.enqueue(false);
+        // queue.enqueue(0);
+        // queue.enqueue(undefined);
+        expect(function() { stack.push(false); }).not.throws();
+        expect(function() { stack.push(0); }).not.throws();
+        expect(function() { stack.push(undefined); }).not.throws();
+        expect(stack.size()).to.equal(3);
+        expect(stack.pop()).to.equal(undefined);
+        expect(stack.pop()).to.equal(0);
+        expect(stack.pop()).to.equal(false);
+
+      });
     });
 
   });
@@ -156,6 +170,20 @@ define([
         queue.dequeue();
         queue.enqueue('c');
         expect(queue.dequeue()).to.equal('b');
+      });
+
+      it('passing falsy values', function() {
+        //queue.enqueue(false);
+        // queue.enqueue(0);
+        // queue.enqueue(undefined);
+        expect(function() { queue.enqueue(false); }).not.throws();
+        expect(function() { queue.enqueue(0); }).not.throws();
+        expect(function() { queue.enqueue(undefined); }).not.throws();
+        expect(queue.size()).to.equal(3);
+        expect(queue.dequeue()).to.equal(false);
+        expect(queue.dequeue()).to.equal(0);
+        expect(queue.dequeue()).to.equal(undefined);
+
       });
     });
 
