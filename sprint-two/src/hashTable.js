@@ -1,52 +1,13 @@
 
-// /*
-//  ********** NOTE: **********
-//  * Do not edit this code unless you see a bug!
-//  */
-
-
-// // This class represents an array with limited functionality and a maximum size.
-// // It will ensure that you don't accidentally try to use up too much space.
-// //
-// // Usage:
-// //   limitedArray.set(3, 'hi');
-// //   limitedArray.get(3); // returns 'hi'
-
-// var LimitedArray = function(limit) {
-//   var storage = [];
-
-//   var limitedArray = {};
-//   limitedArray.get = function(index) {
-//     checkLimit(index);
-//     return storage[index];
-//   };
-//   limitedArray.set = function(index, value) {
-//     checkLimit(index);
-//     storage[index] = value;
-//   };
-//   limitedArray.each = function(callback) {
-//     for (var i = 0; i < storage.length; i++) {
-//       callback(storage[i], i, storage);
-//     }
-//   };
-
-//   var checkLimit = function(index) {
-//     if (typeof index !== 'number') {
-//       throw new Error('setter requires a numeric index for its first argument');
-//     }
-//     if (limit <= index) {
-//       throw new Error('Error trying to access an over-the-limit index');
-//     }
-//   };
-
-//   return limitedArray;
-
-// 
-// };
 var HashTable = function() {
   this._limit = 8;
   this._storage = LimitedArray(this._limit);
   this._key = []; //This is tuple where odd is index and even is key
+  count = 0;
+  this._timeToDouble = this._limit * .75;
+  this._timeToHalve = this._limit * .25;
+  this._bucket = [];
+  
 };
 
 HashTable.prototype.insert = function(k, v) {
@@ -64,6 +25,9 @@ HashTable.prototype.insert = function(k, v) {
   // It means its a duplicate. We need to overwrite
   if (keyExist > -1 && valueExist !== undefined) {
     this._storage.set(index, v);
+    var replace = this._bucket.indexOf([k, valueExist]);
+    this._bucket[replace] = [k, v];
+    
   } else {
   
   //If key does not exist but value is return for index in storage
@@ -80,16 +44,23 @@ HashTable.prototype.insert = function(k, v) {
 
       //Push the new array to storage
       this._storage.set(index, newArray);
+      this._bucket.push([k, v]); 
+      count++;
     } else {
       //No key or no value
       if (keyExist === -1 && valueExist === undefined) {
         this._storage.set(index, v);
+        this._bucket.push([k, v]); 
+        this._count++;
       }
     }
+  
       
   }
+ 
   //Insert key and index in array
   this._key.push(index, k);
+  this.double(this._count);
 };
 
 HashTable.prototype.retrieve = function(k) {
@@ -107,6 +78,21 @@ HashTable.prototype.retrieve = function(k) {
 HashTable.prototype.remove = function(k) {
   var index = getIndexBelowMaxForKey(k, this._limit);
   this._storage.set(index, undefined);
+  this._count--;
+  if (this._count < this._timeToHalve) {
+    this._limit /= 2;
+    this._storage = LimitedArray(this._limit);
+  }
+};
+
+HashTable.prototype.double = function(count) {
+  if (count > this._timeToDouble) {
+    this._limit *= 2;
+    this._storage = LimitedArray(this._limit);
+    for (var i = 0; i < this._bucket.length; i++) {
+      this.insert(this._bucket[i][0], this._bucket[i][1]);
+    }
+  }
 };
 
 /*hash*/
