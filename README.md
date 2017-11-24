@@ -1,4 +1,4 @@
-#data-structures
+# data-structures
 This project was completed to understand data-structures and their functionalities.
 
 by Peter X. Tan
